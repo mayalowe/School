@@ -1,4 +1,4 @@
-// Eric Lowe
+// Eric Lowe and Rodolfo Hernandez
 // catalog.cpp
 
 #include <iostream>
@@ -16,9 +16,9 @@ using namespace std;
 // Opens directory for reading, declares Course object array
 Catalog::Catalog():count(0), size(10)
 {
-  char path[150];
+  char path[50] = "";
   courses = new Course[10]; // declares array of Course objects of size = size (10)
-  DIR *dir = opendir("/Users/Eric/Desktop/ecs40/exp_course_desc");
+  DIR *dir = opendir("exp_course_desc");
   
   if(dir) // if directory exists
   {
@@ -30,8 +30,8 @@ Catalog::Catalog():count(0), size(10)
         if (count == size) // if number of files read equal to Course array size
           moreCourses(); // grow Course array
        
-        strcpy(path, "/Users/Eric/Desktop/ecs40/exp_course_desc/");
-        strcpy(path, ent->d_name);
+        strcpy(path, "exp_course_desc/");
+        strcat(path, ent->d_name);
         ifstream inf(path);
 
 	if (!inf)

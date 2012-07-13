@@ -1,8 +1,6 @@
-// Eric Lowe
+// Eric Lowe and Rodolfo Hernandez
 // catalog.h
-// Usage Statement:
-//
-// Explanations
+
 
 #ifndef CATALOG_H_
 #define CATALOG_H_

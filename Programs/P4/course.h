@@ -1,4 +1,4 @@
-// Eric Lowe
+// Eric Lowe and Rodolfo Hernandez
 // course.h
 
 #ifndef COURSE_H_
