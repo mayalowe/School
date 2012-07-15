@@ -25,7 +25,7 @@ Catalog::Catalog():count(0), size(10)
     struct dirent *ent;
     while((ent = readdir(dir)) != NULL) // while reading from dir
     {
-      if(strstr(ent->d_name, ".html")) // if file isn't a hidden file                                                  
+      if(strstr(ent->d_name, ".html")) // if file is an html file                                                 
       {
         if (count == size) // if number of files read equal to Course array size
           moreCourses(); // grow Course array
@@ -105,7 +105,8 @@ void Catalog::moreCourses()
 
 void Catalog::printMenu()
 {
-  cout << "Menu\n" << "0. Done.\n" << "1. Find a course.\n" << "2. Show all courses.\n\n";
+  cout << "Menu\n" << "0. Done.\n" << "1. Find a course.\n" << "2. Show all courses.\n";
+  cout << "3. Read schedule.\n" << "4. Edit schedule.\n";
   cout << "Your choice: ";
   return;
 } // void Catalog::printMenu()
