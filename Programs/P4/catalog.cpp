@@ -31,7 +31,7 @@ istream &operator>>(ifstream &inf, Catalog &rhs)
   if (rhs.count == rhs.size) // if number of files read equal to Course array size
     rhs.moreCourses(); // grow Course array
   
-  if(inf >> rhs.courses[rhs.count])
+  if(rhs.courses[rhs.count].parseFile(inf))
     rhs.count++; // increment count
   
   return(inf);

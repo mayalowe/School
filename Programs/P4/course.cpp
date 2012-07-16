@@ -66,7 +66,6 @@ Course& Course::operator=(const Course &rhs)
 
 istream &operator>>(ifstream &inf, Course &rhs)
 {
-  rhs.parseFile(inf);
   return(inf);
 } // istream &operator>>(istream &inf, Course &rhs)
 
