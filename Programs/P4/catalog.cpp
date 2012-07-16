@@ -40,8 +40,8 @@ Catalog& Catalog::operator=(const Catalog &rhs)
     size = rhs.size;
     count = rhs.count;
     
-    courses = new Course[count];
-    for(int i = 0; i < count; i++)
+    courses = new Course[size];
+    for(int i = 0; i < size; i++)
     {
       courses[i] = rhs.courses[i];
     } // for(int i = 0; i < count; i++)

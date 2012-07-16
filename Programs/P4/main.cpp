@@ -17,14 +17,13 @@
 
 using namespace std;
 
-Catalog readDir(Catalog catalog);
+void readDir(Catalog &catalog);
 
 int main()
 {
   int choice; // variable stores users menu choice
   Catalog myCatalog; // declares Catalog object
   
-  myCatalog = readDir(myCatalog);
   do 
   {
     myCatalog.printMenu(); // calls menu function from Catalog object
@@ -35,10 +34,12 @@ int main()
       switch (choice)
       {
         case 1:
+          readDir(myCatalog);
           myCatalog.findClass(); // calls find function
           break;
           
         case 2:
+          readDir(myCatalog);
           myCatalog.showAll(); // Shows all courses
           break;
           
@@ -62,7 +63,7 @@ int main()
 // This function is supposed to explore the exp_course_desc directory
 // so that overloaded extraction operators can be used to read info
 // from files.
-Catalog readDir(Catalog catalog)
+void readDir(Catalog &catalog)
 {
   char path[50] = "";
     
@@ -76,7 +77,7 @@ Catalog readDir(Catalog catalog)
       if(strstr(ent->d_name, ".html")) // if file is an html file                                                 
       {
         strcpy(path, "exp_course_desc/");
-        strcat(path, ent->d_name);
+        strcat(path, ent->d_name);  
         ifstream inf(path);
 
         if (!inf)
@@ -84,15 +85,15 @@ Catalog readDir(Catalog catalog)
           cout << "Couldn't open file " << path << "\n" << endl;
           exit(1);
         }
-        
-        inf >> catalog;
+                         
+       inf >> catalog;
       } // if(strstr(ent->d_name, ".html"))                                                                                      
     } // while((ent = readdir(dir)) != NULL)                                                                    
   } // if(dir)
   else
   {
     cout << "Error opening directory\n";
-    return (catalog);
+    return;
   } // else if directory can't be read
-  return (catalog);
+  return;
 } // void readDir(Catalog catalog)
