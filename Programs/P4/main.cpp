@@ -17,7 +17,7 @@
 
 using namespace std;
 
-void readDir(Catalog &catalog);
+void readDir(Catalog &catalog); // Function readDir explores the directory
 
 int main()
 {
@@ -34,12 +34,12 @@ int main()
       switch (choice)
       {
         case 1:
-          readDir(myCatalog);
+          readDir(myCatalog); // Explore directory and fill Catalog
           myCatalog.findClass(); // calls find function
           break;
           
         case 2:
-          readDir(myCatalog);
+          readDir(myCatalog); // Explore directory and fill catalog
           myCatalog.showAll(); // Shows all courses
           break;
           
@@ -67,18 +67,18 @@ void readDir(Catalog &catalog)
 {
   char path[50] = "";
     
-  DIR *dir = opendir("exp_course_desc");
+  DIR *dir = opendir("exp_course_desc"); // declares directory handle
     
   if(dir) // if directory exists
   {
-    struct dirent *ent;
+    struct dirent *ent; // declares a struct from header file dirent.h
     while((ent = readdir(dir)) != NULL) // while reading from dir
     {
       if(strstr(ent->d_name, ".html")) // if file is an html file                                                 
       {
-        strcpy(path, "exp_course_desc/");
-        strcat(path, ent->d_name);  
-        ifstream inf(path);
+        strcpy(path, "exp_course_desc/"); // copy directory to string path
+        strcat(path, ent->d_name); // copy filename to end of path
+        ifstream inf(path); // open file
 
         if (!inf)
         {
@@ -86,7 +86,7 @@ void readDir(Catalog &catalog)
           exit(1);
         }
                          
-       inf >> catalog;
+       inf >> catalog; // Fill Catalog using overloaded extraction operator
       } // if(strstr(ent->d_name, ".html"))                                                                                      
     } // while((ent = readdir(dir)) != NULL)                                                                    
   } // if(dir)
@@ -96,4 +96,4 @@ void readDir(Catalog &catalog)
     return;
   } // else if directory can't be read
   return;
-} // void readDir(Catalog catalog)
+} // void readDir(Catalog &catalog)

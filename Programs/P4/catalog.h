@@ -17,7 +17,6 @@ class Catalog {
 public:
   Catalog();
   ~Catalog();
-  Catalog& operator=(const Catalog &rhs);
   void findClass();
   void printMenu();
   void printPrereqs(int pos, char prereqList[]);

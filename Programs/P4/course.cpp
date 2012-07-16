@@ -64,6 +64,7 @@ Course& Course::operator=(const Course &rhs)
   return (*this);
 } // Course& Course::operator=(const Course &rhs)
 
+// Overoaded extraction operator for Course class
 ifstream &operator>>(ifstream &inf, Course &rhs)
 {
   return(inf);
