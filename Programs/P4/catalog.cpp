@@ -2,6 +2,7 @@
 // catalog.cpp
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <cstring>
 #include <dirent.h>

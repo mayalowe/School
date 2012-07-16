@@ -2,6 +2,7 @@
 // course.cpp
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cstring>
 #include <fstream>
