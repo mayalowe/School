@@ -64,6 +64,12 @@ Course& Course::operator=(const Course &rhs)
   return (*this);
 } // Course& Course::operator=(const Course &rhs)
 
+istream &operator>>(ifstream &inf, Course &rhs)
+{
+  rhs.parseFile(inf);
+  return(inf);
+} // istream &operator>>(istream &inf, Course &rhs)
+
 int Course::getCount() const
 {
   return (count);

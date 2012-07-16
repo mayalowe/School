@@ -16,40 +16,7 @@ using namespace std;
 // Opens directory for reading, declares Course object array
 Catalog::Catalog():count(0), size(10)
 {
-  char path[50] = "";
-  courses = new Course[10]; // declares array of Course objects of size = size (10)
-  DIR *dir = opendir("exp_course_desc");
-  
-  if(dir) // if directory exists
-  {
-    struct dirent *ent;
-    while((ent = readdir(dir)) != NULL) // while reading from dir
-    {
-      if(strstr(ent->d_name, ".html")) // if file is an html file                                                 
-      {
-        if (count == size) // if number of files read equal to Course array size
-          moreCourses(); // grow Course array
-       
-        strcpy(path, "exp_course_desc/");
-        strcat(path, ent->d_name);
-        ifstream inf(path);
-
-	if (!inf)
-	{
-	  cout << "Couldn't open file " << path << "\n" << endl;
-	  exit(1);
-	}
-        if(courses[count].parseFile(inf))
-          count++; // increment count
-      } // if(strstr(ent->d_name, ".html"))                                                                                      
-    } // while((ent = readdir(dir)) != NULL)                                                                    
-  } // if(dir)
-  else
-  {
-    cout << "Error opening directory\n";
-    return;
-  } // else if directory can't be read
-  
+  courses = new Course[10]; // declares array of Course objects of size = size (10) 
 } // Catalog::Catalog()
 
 // Catalog object destructor
@@ -59,7 +26,16 @@ Catalog::~Catalog()
     delete[] courses;
 } // Catalog::~Catalog()
 
-
+istream &operator>>(ifstream &inf, Catalog &rhs)
+{
+  if (rhs.count == rhs.size) // if number of files read equal to Course array size
+    rhs.moreCourses(); // grow Course array
+  
+  if(inf >> rhs.courses[rhs.count])
+    rhs.count++; // increment count
+  
+  return(inf);
+} // istream &operator>>(istream &inf, Catalog &rhs)
 void Catalog::findClass()
 {
   int i;

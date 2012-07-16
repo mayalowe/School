@@ -14,6 +14,7 @@ class Course {
     char **prereqs;
     int count;
     char quarters;
+    friend istream &operator>>(ifstream &inf, Course &rhs);
     void addPrereqName(const char *prereqName);
     int readPrereq(char *line, int pos, char previous[]);
     void readPrereqs(ifstream &inf);
