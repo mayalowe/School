@@ -34,6 +34,14 @@ int main()
           myCatalog.showAll(); // Shows all courses
           break;
           
+        case 3:
+          cout << "Coming soon!\n\n";
+          break;
+          
+        case 4:
+          cout << "Coming soon!\n\n";
+          break;
+          
         default: // if anything other than 0,1 or 2
           cout << "Choice must be between 0 and 2.\n";
           break;
