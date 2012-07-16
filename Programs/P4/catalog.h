@@ -12,7 +12,7 @@ class Catalog {
   Course *courses;
   int count;
   int size;
-  friend istream &operator>>(ifstream &inf, Catalog &rhs);
+  friend ifstream &operator>>(ifstream &inf, Catalog &rhs);
   void moreCourses();
 public:
   Catalog();

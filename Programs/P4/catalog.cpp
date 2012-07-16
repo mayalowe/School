@@ -26,7 +26,7 @@ Catalog::~Catalog()
     delete[] courses;
 } // Catalog::~Catalog()
 
-istream &operator>>(ifstream &inf, Catalog &rhs)
+ifstream &operator>>(ifstream &inf, Catalog &rhs)
 {
   if (rhs.count == rhs.size) // if number of files read equal to Course array size
     rhs.moreCourses(); // grow Course array

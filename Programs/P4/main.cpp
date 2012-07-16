@@ -17,14 +17,14 @@
 
 using namespace std;
 
-void readDir(Catalog catalog);
+Catalog readDir(Catalog catalog);
 
 int main()
 {
   int choice; // variable stores users menu choice
   Catalog myCatalog; // declares Catalog object
   
-  readDir(myCatalog);
+  myCatalog = readDir(myCatalog);
   do 
   {
     myCatalog.printMenu(); // calls menu function from Catalog object
@@ -62,7 +62,7 @@ int main()
 // This function is supposed to explore the exp_course_desc directory
 // so that overloaded extraction operators can be used to read info
 // from files.
-void readDir(Catalog catalog)
+Catalog readDir(Catalog catalog)
 {
   char path[50] = "";
     
@@ -92,7 +92,7 @@ void readDir(Catalog catalog)
   else
   {
     cout << "Error opening directory\n";
-    return;
+    return (catalog);
   } // else if directory can't be read
-  return;
+  return (catalog);
 } // void readDir(Catalog catalog)

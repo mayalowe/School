@@ -64,7 +64,7 @@ Course& Course::operator=(const Course &rhs)
   return (*this);
 } // Course& Course::operator=(const Course &rhs)
 
-istream &operator>>(ifstream &inf, Course &rhs)
+ifstream &operator>>(ifstream &inf, Course &rhs)
 {
   return(inf);
 } // istream &operator>>(istream &inf, Course &rhs)
