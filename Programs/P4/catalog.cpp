@@ -26,6 +26,30 @@ Catalog::~Catalog()
     delete[] courses;
 } // Catalog::~Catalog()
 
+
+Catalog& Catalog::operator=(const Catalog &rhs)
+{
+  if(this == &rhs) // if identical
+    return (*this); // return current object 
+  
+  if(courses) // if Course object 
+  {
+    delete[] courses;
+  } // if(courses)
+    
+    size = rhs.size;
+    count = rhs.count;
+    
+    courses = new Course[count];
+    for(int i = 0; i < count; i++)
+    {
+      courses[i] = rhs.courses[i];
+    } // for(int i = 0; i < count; i++)
+    
+    return (*this);
+} // Catalog& Catalog::operator=(const Catalog &rhs)
+
+
 ifstream &operator>>(ifstream &inf, Catalog &rhs)
 {
   if (rhs.count == rhs.size) // if number of files read equal to Course array size
