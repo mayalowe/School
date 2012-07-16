@@ -35,11 +35,11 @@ int main()
           break;
           
         case 3:
-          cout << "Coming soon!\n\n";
+          cout << "Coming soon!\n\n"; // Will be the option to read schedules
           break;
           
         case 4:
-          cout << "Coming soon!\n\n";
+          cout << "Coming soon!\n\n"; // Will be the option to edit schedules
           break;
           
         default: // if anything other than 0,1 or 2
