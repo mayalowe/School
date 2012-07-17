@@ -16,5 +16,12 @@ class Schedule {
     char *stname;
     char **prvcourses;
     Quarter *quarters;
+    int prvcount; // count of previous courses
+    
+public:
+    Schedule();
+    ~Schedule();
+    friend istream& operator>>(istream &in, Schedule &schedule);
+    friend ostream& operator<<(ostream &out, Schedule &schedule);
 };
 #endif /* SCHEDULE_H_ */

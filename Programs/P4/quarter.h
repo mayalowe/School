@@ -13,8 +13,14 @@
 #include "schedule.h"
 
 class Quarter {
-    char *season;
-    char *year;
-    char **courses;
+  char *season;
+  char *year;
+  char **courses;
+  int count; // int variable to count number of courses in quarter
+public:
+  Quarter();
+  ~Quarter();
+  friend istream& operator>>(istream &in, Quarter &quarter);
+  friend ostream& operator<<(ostream &out, Quarter &quarter);
 };
 #endif /* QUARTER_H_ */
