@@ -65,24 +65,27 @@ Course& Course::operator=(const Course &rhs)
   return (*this);
 } // Course& Course::operator=(const Course &rhs)
 
-// Overoaded extraction operator for Course class
+// Overoaded file stream extraction operator for Course class
 ifstream &operator>>(ifstream &inf, Course &rhs)
 {
   return(inf);
 } // istream &operator>>(istream &inf, Course &rhs)
 
+// Method to return the value of the count variable for the corresponding
+// Course object
 int Course::getCount() const
 {
   return (count);
 } // int Course::getCount() const;
 
-
+// Method to return the course name for the corresponding Course object
 const char * Course::getName() const
 {
   return (name);
 } // const char * Course::getName() const;
 
-
+// Method to return the prerequisite courses for the corresponding Course
+// object
 const char * Course::getPrereq(int pos) const
 {
   if(pos < count)
@@ -91,7 +94,8 @@ const char * Course::getPrereq(int pos) const
   return (name);
 } // const char * Course::getPrereq(int pos) const;
 
-
+// Method to open .html course description files; returns true if file is opened
+// which is used to increment the count variable in the Catalog object
 bool Course::parseFile(ifstream &inf)
 {
   char line[1000], line2[1000], *ptr, *ptr2;
@@ -121,7 +125,7 @@ bool Course::parseFile(ifstream &inf)
   return (true);
 } // bool Course::parseFile(ifstream &inf);
 
-
+// Method to print out info for corresponding Course object
 void Course::printFile() const
 {
   cout << name << ": ";
