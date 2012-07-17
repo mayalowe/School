@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Quarter::Quarter()
+Quarter::Quarter():season(NULL), year(NULL), courses(NULL), count(0)
 {
   
 } // Quarter::Quarter()
@@ -49,19 +49,19 @@ ostream &operator<<(ostream &out, Quarter &quarter)
 } // friend ostream& operator<<(ostream &out, Quarter &quarter)
 
 
-Quarter& operator+=(Quarter &quarter)
+Quarter& Quarter::operator+=(Quarter &quarter)
 {
-  
+  return(*this);
 } // Quarter& operator+=(Quarter &quarter)
 
   
-Quarter& operator-=(Quarter &quarter)
+Quarter& Quarter::operator-=(Quarter &quarter)
 {
-  
+  return(*this);
 } // Quarter& operator-=(Quarter &quarter)
 
   
-Quarter& operator==(Quarter &quarter)
+Quarter& Quarter::operator==(Quarter &quarter)
 {
-  
+  return(*this);
 } // Quarter& operator==(Quarter &quarter)

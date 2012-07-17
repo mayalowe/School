@@ -13,9 +13,9 @@
 #include "quarter.h"
 
 class Schedule {
+    Quarter *quarters;
     char *stname;
     char **prvcourses;
-    Quarter *quarters;
     int prvcount; // count of previous courses
     
 public:
@@ -23,8 +23,8 @@ public:
     ~Schedule();
     friend istream& operator>>(istream &in, Schedule &schedule);
     friend ostream& operator<<(ostream &out, Schedule &schedule);
-    Schedule& operator+=(Schedule &lhs, Quarter &rhs);
-    Schedule& operator-=(Schedule &lhs, Quarter &rhs);
+    Schedule& operator+=(Schedule &schedule);
+    Schedule& operator-=(Schedule &schedule);
     void readFile();
     void editSchedule();
 };

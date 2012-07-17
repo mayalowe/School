@@ -10,7 +10,6 @@
 #include <cstdlib>
 #include <cstring>
 #include "course.h"
-#include "schedule.h"
 
 class Quarter {
   char *season;

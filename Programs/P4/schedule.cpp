@@ -12,9 +12,9 @@
 
 using namespace std;
 
-Schedule::Schedule()
+Schedule::Schedule():stname(NULL), prvcourses(NULL), prvcount(0)
 {
-    
+  quarters = new Quarter[1];
 } // Schedule::Schedule()
 
 
@@ -48,22 +48,24 @@ ostream &operator<<(ostream &out, Schedule &schedule)
   return(out);
 } // friend ostream& operator<<(ostream &out, Schedule &schedule)
 
-Schedule& Schedule::operator+=(Schedule &lhs, Quarter &rhs)
+Schedule& Schedule::operator+=(Schedule &schedule)
 {
-  
+  return(*this);
 } // Schedule& Schedule::operator+=(Schedule &lhs, Quarter &rhs)    
 
-Schedule& Schedule::operator-=(Schedule &lhs, Quarter &rhs)
+Schedule& Schedule::operator-=(Schedule &schedule)
 {
-  
+  return(*this);
 } // Schedule& Schedule::operator-=(Schedule &lhs, Quarter &rhs)     
 
 void Schedule::readFile()
 {
-  
+  cout << "I'll be reading your schedule files shortly!\n" << endl;
+  return;
 } // void Schedule::readFile()    
 
 void Schedule::editSchedule()
 {
-  
+  cout << "I'll be helping you edit your schedule shortly!\n" << endl;
+  return;
 } // void Schedule::editSchedule()

@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include "catalog.h"
 #include "course.h"
+#include "schedule.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ int main()
 {
   int choice; // variable stores users menu choice
   Catalog myCatalog; // declares Catalog object
+  Schedule mySchedule;
   
   do 
   {
@@ -44,11 +46,11 @@ int main()
           break;
           
         case 3:
-          cout << "Coming soon!\n\n"; // Will be the option to read schedules
+          mySchedule.readFile(); // Will be the option to read schedules
           break;
           
         case 4:
-          cout << "Coming soon!\n\n"; // Will be the option to edit schedules
+          mySchedule.editSchedule(); // Will be the option to edit schedules
           break;
           
         default: // if anything other than 0,1 or 2
