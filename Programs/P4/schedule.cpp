@@ -66,7 +66,17 @@ Schedule& Schedule::operator-=(Schedule &schedule)
 // and then should call appropriate overloaded operators
 void Schedule::readFile()
 {
-  cout << "I'll be reading your schedule files shortly!\n" << endl;
+  char file[50];
+  cin.ignore(100, '\n');
+  cout << "Student name: ";
+  cin.getline(file, 50);
+  strcat(file, ".csv");
+  //cout << "File is: " << file << endl;
+  ifstream inf(file);
+  
+  if(!inf)
+    cout << file << " not found.\n" << endl;
+  
   return;
 } // void Schedule::readFile()    
 
@@ -74,6 +84,23 @@ void Schedule::readFile()
 // ask for student name but should not attempt to open a file by that name!
 void Schedule::editSchedule()
 {
-  cout << "I'll be helping you edit your schedule shortly!\n" << endl;
+  char name[50];
+  cin.ignore(100, '\n');
+  cout << "Student name: ";
+  cin.getline(name, 50);
+  
+  if(!stname)
+  {
+    stname = new char[strlen(name) + 1];
+    strcpy(stname, name);
+    cout << "Name is " << name << endl;
+    return;
+  }
   return;
 } // void Schedule::editSchedule()
+
+// Method to write out a .csv file containing a student's schedule
+void Schedule::writeFile()
+{
+  return;
+} // void Schedule::writeFile()

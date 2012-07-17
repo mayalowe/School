@@ -17,14 +17,14 @@ class Schedule {
     char *stname;
     char **prvcourses;
     int prvcount; // count of previous courses
-    
-public:
-    Schedule();
-    ~Schedule();
     friend istream& operator>>(istream &in, Schedule &schedule);
     friend ostream& operator<<(ostream &out, Schedule &schedule);
     Schedule& operator+=(Schedule &schedule);
     Schedule& operator-=(Schedule &schedule);
+    void writeFile();
+public:
+    Schedule();
+    ~Schedule();
     void readFile();
     void editSchedule();
 };
