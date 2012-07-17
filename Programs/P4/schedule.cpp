@@ -85,14 +85,14 @@ void Schedule::readFile()
   cin.getline(file, 50);
   strcat(file, ".csv");
   //cout << "File is: " << file << endl;
-  ifstream inf(file);
+  ifstream inf(file); // try to open file
   
-  if(!inf)
+  if(!inf) // if file not found print warning and get out
   {
     cout << file << " not found.\n" << endl;
     return;
   }
-  else
+  //else
     
   return;
 } // void Schedule::readFile()    
@@ -106,11 +106,11 @@ void Schedule::editSchedule()
   cout << "Student name: ";
   cin.getline(name, 50);
   
-  if(!stname)
+  if(!stname) // if student name is null
   {
-    stname = new char[strlen(name) + 1];
+    stname = new char[strlen(name) + 1]; // dynamically allocate memory for student name
     strcpy(stname, name);
-    cout << "Name is " << name << endl;
+    cout << "Name is " << name << endl; // for testing/debugging
     return;
   }
   return;
@@ -119,5 +119,17 @@ void Schedule::editSchedule()
 // Method to write out a .csv file containing a student's schedule
 void Schedule::writeFile()
 {
+  char file[50];
+  
+  if(!stname) // if student name is null, get out of here
+    return;
+  else
+    strcpy(file, stname); // copy student name to file string
+  // adds file extension to string file
+  strcat(file, ".csv");
+  
+  ifstream outf(file, ios::app); // should open file for appending
+  // next line should use overloaded insertion operator
+  // outf << schedule;
   return;
 } // void Schedule::writeFile()
