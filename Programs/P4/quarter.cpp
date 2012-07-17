@@ -49,6 +49,12 @@ ostream &operator<<(ostream &out, Quarter &quarter)
   return(out);
 } // friend ostream& operator<<(ostream &out, Quarter &quarter)
 
+// Course object copy constructor
+Quarter& Quarter::operator=(const Quarter &rhs)
+{
+  return(*this);
+} // Quarter& Quarter::operator=(const Quarter &rhs)
+
 // Overloaded operator to add a course name to Quarter object
 Quarter& Quarter::operator+=(Quarter &quarter)
 {
