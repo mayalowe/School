@@ -49,6 +49,19 @@ ostream &operator<<(ostream &out, Schedule &schedule)
   return(out);
 } // friend ostream& operator<<(ostream &out, Schedule &schedule)
 
+// Overloaded file stream extraction operator for Schedule class
+// Reads from file
+ifstream& operator>>(ifstream &inf, Schedule &schedule)
+{
+  return(inf);
+} // friend ifstream& operator>>(ifstream &in, Schedule &schedule)
+  
+// Overloaded file stream insertion operator for Schedule class
+// Writes to file
+ifstream& operator<<(ifstream &outf, Schedule &schedule)
+{
+  return(outf);
+} // friend ifstream& operator<<(ifstream &out, Schedule &schedule)
 // Overloaded operator to add a Quarter object to Schedule
 Schedule& Schedule::operator+=(Schedule &schedule)
 {
@@ -75,8 +88,12 @@ void Schedule::readFile()
   ifstream inf(file);
   
   if(!inf)
+  {
     cout << file << " not found.\n" << endl;
-  
+    return;
+  }
+  else
+    
   return;
 } // void Schedule::readFile()    
 

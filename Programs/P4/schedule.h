@@ -19,6 +19,8 @@ class Schedule {
     int prvcount; // count of previous courses
     friend istream& operator>>(istream &in, Schedule &schedule);
     friend ostream& operator<<(ostream &out, Schedule &schedule);
+    friend ifstream& operator>>(ifstream &inf, Schedule &schedule);
+    friend ifstream& operator<<(ifstream &outf, Schedule &schedule);
     Schedule& operator+=(Schedule &schedule);
     Schedule& operator-=(Schedule &schedule);
     void writeFile();
