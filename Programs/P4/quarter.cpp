@@ -49,3 +49,19 @@ ostream &operator<<(ostream &out, Quarter &quarter)
 } // friend ostream& operator<<(ostream &out, Quarter &quarter)
 
 
+Quarter& operator+=(Quarter &quarter)
+{
+  
+} // Quarter& operator+=(Quarter &quarter)
+
+  
+Quarter& operator-=(Quarter &quarter)
+{
+  
+} // Quarter& operator-=(Quarter &quarter)
+
+  
+Quarter& operator==(Quarter &quarter)
+{
+  
+} // Quarter& operator==(Quarter &quarter)

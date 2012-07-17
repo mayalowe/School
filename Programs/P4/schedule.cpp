@@ -48,3 +48,22 @@ ostream &operator<<(ostream &out, Schedule &schedule)
   return(out);
 } // friend ostream& operator<<(ostream &out, Schedule &schedule)
 
+Schedule& Schedule::operator+=(Schedule &lhs, Quarter &rhs)
+{
+  
+} // Schedule& Schedule::operator+=(Schedule &lhs, Quarter &rhs)    
+
+Schedule& Schedule::operator-=(Schedule &lhs, Quarter &rhs)
+{
+  
+} // Schedule& Schedule::operator-=(Schedule &lhs, Quarter &rhs)     
+
+void Schedule::readFile()
+{
+  
+} // void Schedule::readFile()    
+
+void Schedule::editSchedule()
+{
+  
+} // void Schedule::editSchedule()

@@ -23,5 +23,9 @@ public:
     ~Schedule();
     friend istream& operator>>(istream &in, Schedule &schedule);
     friend ostream& operator<<(ostream &out, Schedule &schedule);
+    Schedule& operator+=(Schedule &lhs, Quarter &rhs);
+    Schedule& operator-=(Schedule &lhs, Quarter &rhs);
+    void readFile();
+    void editSchedule();
 };
 #endif /* SCHEDULE_H_ */

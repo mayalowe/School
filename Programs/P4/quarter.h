@@ -22,5 +22,8 @@ public:
   ~Quarter();
   friend istream& operator>>(istream &in, Quarter &quarter);
   friend ostream& operator<<(ostream &out, Quarter &quarter);
+  Quarter& operator+=(Quarter &quarter);
+  Quarter& operator-=(Quarter &quarter);
+  Quarter& operator==(Quarter &quarter);
 };
 #endif /* QUARTER_H_ */
