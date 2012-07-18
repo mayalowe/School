@@ -60,23 +60,23 @@ ifstream& operator>>(ifstream &inf, Schedule &schedule)
 // Writes to file
 ifstream& operator<<(ifstream &outf, Schedule &schedule)
 {
-  outf << schedule.stname << "," << schedule.prvcount << "," << schedule.qcount << "\n";
-  if(schedule.prvcount > 0)
-  {
-    for(int i = 0; i < schedule.prvcount; i++)
-    {
-      outf << schedule.prvcourses[i] << ",";
-    } // for(int i = 0; i < schedule.prvcount; i++)
-  } // if(schedule.prvcount > 0)
-  outf << "\n";
+  //outf << schedule.stname << "," << schedule.prvcount << "," << schedule.qcount << "\n";
+  //if(schedule.prvcount > 0)
+  //{
+    //for(int i = 0; i < schedule.prvcount; i++)
+    //{
+     // outf << schedule.prvcourses[i] << ",";
+    //} // for(int i = 0; i < schedule.prvcount; i++)
+  //} // if(schedule.prvcount > 0)
+  //outf << "\n";
   
-  if(schedule.qcount > 0)
-  {
-    for(int j = 0; j < schedule.qcount; j++)
-    {
-      outf << schedule.quarters[j] << "\n";
-    } // for(int j = 0; j < qcount; j++)
-  } // if(schedule.qcount > 0)
+  //if(schedule.qcount > 0)
+  //{
+    //for(int j = 0; j < schedule.qcount; j++)
+    //{
+     // outf << schedule.quarters[j] << "\n";
+   // } // for(int j = 0; j < qcount; j++)
+  //} // if(schedule.qcount > 0)
   
   return(outf);
 } // friend ifstream& operator<<(ifstream &out, Schedule &schedule)
@@ -148,7 +148,7 @@ void Schedule::writeFile()
   
   ifstream outf(file, ios::out); // should open file for appending
   // next line should use overloaded insertion operator
-  outf << schedule;
+  //outf << *this;
   return;
 } // void Schedule::writeFile()
 
