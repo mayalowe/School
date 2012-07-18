@@ -134,7 +134,7 @@ void Schedule::writeFile()
   return;
 } // void Schedule::writeFile()
 
-// Method to print out the course menu
+// Method to print out the previous course menu
 void Schedule::courseMenu()
 {
   int choice;
@@ -176,7 +176,7 @@ void Schedule::quarterMenu()
   int choice;
   
   getPrevious(); // call method to list previous courses
-  courseMenu(); // call method to print course menu with options
+  courseMenu(); // call method to print previous course menu with options
   getQuarters();
   do // this will loop at least once, and will continue to loop if choice != 0
   {
@@ -190,15 +190,15 @@ void Schedule::quarterMenu()
       switch(choice)
       {
         case 1:
-          cout << "Will allow you to add quarter soon\n";
+          addQuarter();
           break;
               
         case 2:
-          cout << "Will allow you to remove quarter soon\n";
+          remQuarter();
           break;
           
         case 3:
-          cout << "Will allow you to edit quarter soon\n";
+          editQuarter();
           break;
               
         default:
@@ -207,7 +207,7 @@ void Schedule::quarterMenu()
       } // switch(choice)
     } // if(choice != 0)  
   }while(choice != 0);
-  
+  saveSchedule();
   return;
 } // void Schedule::quarterMenu()
 
@@ -252,3 +252,68 @@ void Schedule::getQuarters()
   } // else
   return;
 } // void Schedule::getQuarters()
+
+//
+void Schedule::addQuarter()
+{
+  int season;
+  char year[10];
+  if(qcount > 0)
+  {
+    qcount++;
+    quarters += qcount;
+  } // if(qcount > 0)
+    
+  cout << "\nAdd Quarter\n";
+  cout << "Quarter season (1 = Fall, 2 = Winter, 3 = Spring): ";
+  cin >> season;
+  cout << "Year: ";
+  cin.getline(year, 10);
+  
+  editQuarter();
+  return;
+} // void Schedule::addQuarter()
+ 
+//
+void Schedule::remQuarter()
+{
+  
+  return;
+} // void Schedule::remQuarter()
+ 
+//
+void Schedule::editQuarter()
+{
+  int choice;
+  cout << "\n\nEdit Quarter Menu\n";
+  cout << "0. Done\n1. Add course.\n2. Remove course.\n\n";
+  cout << "Your choice: ";
+  cin >> choice;
+  cout << "Will let you edit soon\n";
+  return; 
+} // void editQuarter()
+
+void Schedule::saveSchedule()
+{
+  int save;
+  
+  do
+  {
+    cout << "Do you wish to save this schedule (0 = no, 1 = yes): ";
+    cin >> save;
+    if(save != 0)
+    {
+      switch(save)
+      {
+        case 1:
+          writeFile();
+          break;
+          
+        default:
+          break;
+      } // switch(save)
+    } // if(save != 0)
+  }while(save != 0);
+  
+  return;
+} // void Schedule::saveSchedule()

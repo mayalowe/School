@@ -29,6 +29,10 @@ class Schedule {
     void quarterMenu();
     void getPrevious();
     void getQuarters();
+    void addQuarter();
+    void remQuarter();
+    void editQuarter();
+    void saveSchedule();
 public:
     Schedule();
     ~Schedule();

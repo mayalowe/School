@@ -40,6 +40,7 @@ Quarter::~Quarter()
 // Overloaded input stream extraction operator for Quarter class
 istream &operator>>(istream &in, Quarter &quarter)
 {
+  
   return(in);
 } // friend istream& operator>>(istream &in, Quarter &quarter)
   
@@ -57,7 +58,7 @@ Quarter& Quarter::operator=(const Quarter &rhs)
 } // Quarter& Quarter::operator=(const Quarter &rhs)
 
 // Overloaded operator to add a course name to Quarter object
-Quarter& Quarter::operator+=(Quarter &quarter)
+const Quarter& Quarter::operator+=(int count)
 {
   return(*this);
 } // Quarter& operator+=(Quarter &quarter)
