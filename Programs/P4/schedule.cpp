@@ -267,6 +267,7 @@ void Schedule::addQuarter()
   cout << "\nAdd Quarter\n";
   cout << "Quarter season (1 = Fall, 2 = Winter, 3 = Spring): ";
   cin >> season;
+  cin.ignore();
   cout << "Year: ";
   cin.getline(year, 10);
   
