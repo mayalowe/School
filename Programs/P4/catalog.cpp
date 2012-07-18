@@ -85,7 +85,7 @@ void Catalog::moreCourses()
 
 void Catalog::printMenu()
 {
-  cout << "Menu\n" << "0. Done.\n" << "1. Find a course.\n" << "2. Show all courses.\n";
+  cout << "\nMenu\n" << "0. Done.\n" << "1. Find a course.\n" << "2. Show all courses.\n";
   cout << "3. Read schedule.\n" << "4. Edit schedule.\n";
   cout << "Your choice: ";
   return;

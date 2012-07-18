@@ -13,7 +13,7 @@
 using namespace std;
 
 // Complete constructor for Schedule class
-Schedule::Schedule():stname(NULL), prvcourses(NULL), prvcount(0)
+Schedule::Schedule():stname(NULL), prvcourses(NULL), qcount(0), prvcount(0)
 {
   quarters = new Quarter[1];
 } // Schedule::Schedule()
@@ -110,9 +110,9 @@ void Schedule::editSchedule()
   {
     stname = new char[strlen(name) + 1]; // dynamically allocate memory for student name
     strcpy(stname, name);
-    cout << "Name is " << name << endl; // for testing/debugging
-    return;
   }
+  
+  quarterMenu(); // calls menu method
   return;
 } // void Schedule::editSchedule()
 
@@ -133,3 +133,122 @@ void Schedule::writeFile()
   // outf << schedule;
   return;
 } // void Schedule::writeFile()
+
+// Method to print out the course menu
+void Schedule::courseMenu()
+{
+  int choice;
+  
+  // Before this do-while loop should call Schedule method to list previous courses
+  do
+  {
+    cout << "Previous Course Menu\n";
+    cout << "0. Done\n1. Add course\n2. Remove course\n" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+    
+    if(choice != 0)
+    {
+      switch(choice)
+      {
+        case 1:
+          cout << "Will allow you to add course soon\n";
+          break;
+          
+        case 2:
+          cout << "Will allow you to remove course soon\n";
+          break;
+          
+        default:
+          cout << "Choice must be between 0 and 2.\n" << endl;
+          break;
+      } // switch(choice)
+    } // if(choice != 0)
+  }while(choice != 0);
+  
+  return;
+} // void Schedule::courseMenu()
+
+
+// Method to print out the quarter menu
+void Schedule::quarterMenu()
+{
+  int choice;
+  
+  getPrevious(); // call method to list previous courses
+  courseMenu(); // call method to print course menu with options
+  getQuarters();
+  do // this will loop at least once, and will continue to loop if choice != 0
+  {
+    cout << "\n\nQuarter Menu\n";
+    cout << "0. Done\n1. Add quarter\n2. Remove quarter\n3. Edit quarter\n" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+        
+    if(choice != 0)
+    {
+      switch(choice)
+      {
+        case 1:
+          cout << "Will allow you to add quarter soon\n";
+          break;
+              
+        case 2:
+          cout << "Will allow you to remove quarter soon\n";
+          break;
+          
+        case 3:
+          cout << "Will allow you to edit quarter soon\n";
+          break;
+              
+        default:
+          cout << "Choice must be between 0 and 2.\n" << endl;
+          break;
+      } // switch(choice)
+    } // if(choice != 0)  
+  }while(choice != 0);
+  
+  return;
+} // void Schedule::quarterMenu()
+
+
+// Method to print out the previous courses taken by a student, if known
+// and will print no previous courses if no previous courses exist
+void Schedule::getPrevious()
+{
+  cout << "\nPrevious Courses: \n";
+  
+  if(prvcount == 0) // if no previous courses
+  {
+    cout << "No previous courses.\n\n" << endl;
+    return;
+  } // if(prvcount == 0)
+  else // previous courses exist
+  {
+    for(int i = 0; i < prvcount; i++) // because previous courses is a double pointer
+    {
+      cout << prvcourses[i] << " ";
+    } // for(int i = 0; i < prvcount; i++)
+    cout << "\n" << endl;
+  } // else
+  return;
+} // void Schedule::getPrevious()
+
+// Method to print info for all quarters in a schedule
+// Relies on quarter class overloaded operators
+void Schedule::getQuarters()
+{
+  cout << "Quarters\n";
+  
+  if(qcount == 0)
+    return;
+  
+  else
+  {
+    for(int i = 0; i < qcount; i++)
+    {
+      cout << quarters[i] << "\n";
+    } // for(int i = 0; i < qcount; i++)
+  } // else
+  return;
+} // void Schedule::getQuarters()

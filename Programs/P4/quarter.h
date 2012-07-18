@@ -25,5 +25,6 @@ public:
   Quarter& operator+=(Quarter &quarter);
   Quarter& operator-=(Quarter &quarter);
   Quarter& operator==(Quarter &quarter);
+  
 };
 #endif /* QUARTER_H_ */

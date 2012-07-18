@@ -46,6 +46,7 @@ istream &operator>>(istream &in, Quarter &quarter)
 // Overloaded output stream insertion operator for Quarter class
 ostream &operator<<(ostream &out, Quarter &quarter)
 {
+  
   return(out);
 } // friend ostream& operator<<(ostream &out, Quarter &quarter)
 
@@ -72,3 +73,6 @@ Quarter& Quarter::operator==(Quarter &quarter)
 {
   return(*this);
 } // Quarter& operator==(Quarter &quarter)
+
+
+

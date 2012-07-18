@@ -16,6 +16,7 @@ class Schedule {
     Quarter *quarters;
     char *stname;
     char **prvcourses;
+    int qcount;
     int prvcount; // count of previous courses
     friend istream& operator>>(istream &in, Schedule &schedule);
     friend ostream& operator<<(ostream &out, Schedule &schedule);
@@ -24,6 +25,10 @@ class Schedule {
     Schedule& operator+=(Schedule &schedule);
     Schedule& operator-=(Schedule &schedule);
     void writeFile();
+    void courseMenu();
+    void quarterMenu();
+    void getPrevious();
+    void getQuarters();
 public:
     Schedule();
     ~Schedule();
