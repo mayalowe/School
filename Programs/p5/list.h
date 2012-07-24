@@ -10,8 +10,8 @@ template <class T> class List;
 template <class T> 
 class ListNode {
   T data;
-  ListNode<T> next;
-  ListNode(int d, ListNode *n): data(d), next(n){};
+  ListNode<T> *next;
+  ListNode(T d, ListNode *n): data(d), next(n){};
   friend class List<T>;
 };
 
@@ -28,14 +28,15 @@ public:
   List<T>& operator=(const T &rhs);
   List<T>& operator+=();
   List<T>& operator-=();
-  List<T>& operator[]();
-  const List<T>& operator[]() const;
+  List<T>& operator[](int index);
+  const List<T>& operator[](int index) const;
   void getSize();
   void insert(const T &n);
-  int& find(int k);
-  void remove(int n);
+  string& find(const T k);
+  void remove(const T k);
 };
 
 
 #endif /* LIST_H_ */
+
 #include "list.cpp"

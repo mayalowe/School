@@ -5,7 +5,7 @@ using namespace std;
 
 
 template <class T> 
-List<T>::List(T nf) : head(NULL), size(0)
+List<T>::List(const T nf) : head(NULL), size(0), notFound(nf)
 {
   
 }
@@ -13,7 +13,7 @@ List<T>::List(T nf) : head(NULL), size(0)
 template <class T> 
 List<T>::~List()
 {
-  
+  delete[] head;
 }
 
 template <class T>  
@@ -38,14 +38,14 @@ List<T>& List<T>::operator-=()
 }
   
 template <class T> 
-List<T>& List<T>::operator[]()
+List<T>& List<T>::operator[](int index)
 {
   
   return(*this);
 }
   
 template <class T> 
-const List<T>& List<T>::operator[]() const
+const List<T>& List<T>::operator[](int index) const
 {
   
   return(*this);
@@ -61,20 +61,47 @@ void List<T>::getSize()
 template <class T> 
 void List<T>::insert(const T &n)
 {
+  ListNode *ptr, *prev = NULL;
+  for(ptr = head; ptr && ptr->data < d; ptr = ptr->next)
+    prev = ptr;
+  
+  if(prev)
+    prev->next = new ListNode(d, ptr);
+  else
+    head = new ListNode(d, ptr);
   
   return;
 }
   
 template <class T> 
-int& List<T>::find(int k)
+string& List<T>::find(const T k)
 {
+  ListNode *ptr;
   
-  return;
+  for(ptr = head; ptr && ptr->data < k; ptr = ptr->next);
+  
+  if(!ptr || key < ptr->data)
+    return(notFound);
+  else
+    return(ptr->data);
 }
   
 template <class T> 
-void List<T>::remove(int n)
+void List<T>::remove(const T k)
 {
+  ListNode *ptr, *prev = NULL;
   
+  for(ptr = head; ptr && ptr->data != k; ptr = ptr->next)
+    prev = ptr;
+  
+  if(!ptr)
+    return;
+  
+  if(!prev)
+    head = ptr->next;
+  else
+    prev->next = ptr->next;
+  
+  delete ptr;
   return;
 }
