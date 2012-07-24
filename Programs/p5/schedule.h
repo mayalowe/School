@@ -1,33 +1,28 @@
-// Eric Lowe
-// schedule.h
-// Usage Statement:
-//
-// Explanations
-
-#ifndef SCHEDULE_H_
-#define SCHEDULE_H_
+// Author: Sean Davis
+#ifndef SCHEDULE_H
+#define	SCHEDULE_H
 
 #include <iostream>
+#include <string>
 #include "quarter.h"
 #include "catalog.h"
+#include "list.h"
 using namespace std;
 
 
 class Schedule
 {
-  char *studentName;
-  int previousCourseCount;
-  char **previousCourses;
-  int quarterCount;
-  Quarter *quarters;
+  string studentName;
+  List <string> previousCourses;
+  List <Quarter> quarters;
   void addPreviousCourse();
   void addQuarter(const Catalog &catalog);
   void editExistingQuarter(int pos, const Catalog &catalog);
   void editPreviousCourses();
   void editQuarter(const Catalog &catalog);
   void editQuarters(const Catalog &catalog);
-  bool findCourse(const char *name) const;
-  void getQuarterTime(char *season, int *year) const;
+  bool findCourse(const string &name) const;
+  void getQuarterTime(string &season, int *year) const;
   void removePreviousCourse();
   void removeQuarter();
 public:
@@ -39,6 +34,5 @@ public:
   void read();
 };
 
+#endif	/* SCHEDULE_H */
 
-
-#endif /* SCHEDULE_H_ */

@@ -1,20 +1,18 @@
-// Eric Lowe
-// schedule.cpp
-// Usage Statement:
-//
-// Explanations
+//  Author: Sean Davis
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <cstdlib>
 #include <iomanip>
+#include "quarter.h"
+#include "catalog.h"
+#include "list.h"
 #include "schedule.h"
 
 using namespace std;
 
-Schedule::Schedule(): studentName(NULL), previousCourseCount(0), 
-  previousCourses(NULL), quarterCount(0), quarters(NULL) 
+Schedule::Schedule():previousCourses(string()), quarters(Quarter()) 
 {
 }  // Schedule()
 
@@ -23,72 +21,40 @@ Schedule::Schedule(): studentName(NULL), previousCourseCount(0),
 
 Schedule::~Schedule()
 {
-  if(studentName)
-    delete[] studentName;
   
-  if(previousCourses)
-  {
-    for(int i = 0; i < previousCourseCount; i++)
-      delete[] previousCourses[i];
-    
-    delete [] previousCourses;
-  }
-
-  
-  if(quarters)
-    delete[] quarters;
 } // ~Schedule()
 
 
 void Schedule::addPreviousCourse()
 {
   
-  char line[1000];
+  string line;
   cout << "Course name to add: ";
-  cin.getline(line, 1000);
+  getline(cin, line);
   
   if(findCourse(line))
     return;
   
-  char **temp = new char*[previousCourseCount + 1];
-  
-  for(int i = 0; i < previousCourseCount; i++)
-    temp[i] = previousCourses[i];
-  
-  delete [] previousCourses;
-  previousCourses = temp;
-  temp[previousCourseCount] = new char[strlen(line) + 1];
-  strcpy(temp[previousCourseCount++], line);
-  
+  previousCourses += line;
 } // addPreviousCourse()
 
 
 void Schedule::addQuarter(const Catalog &catalog)
 {
-  char season[80];
+  string season;
   int year;
   cout << "\nAdd Quarter\n";
   getQuarterTime(season, &year);
-  
-  for(int i = 0; i < quarterCount; i++)
-    if(quarters[i] == Quarter(season, year))
-    {
-        cout << season << ' ' << year << " already exists.\n";
-        return;
-    } // if found a match
-      
-  Quarter *temp = new Quarter[quarterCount + 1];
-  
-  for(int i = 0; i < quarterCount; i++)
-    temp[i] = quarters[i];
-  
-  temp[quarterCount] = Quarter(season, year);
-  delete [] quarters;
-  quarters = temp;
-  quarterCount++;
-  
-  editExistingQuarter(quarterCount - 1, catalog);
-  
+  Quarter quarter(season, year);
+  quarter = quarters.find(Quarter(season, year));
+
+  if(quarters.find(quarter) == quarter)
+    cout << season << ' ' << year << " already exists.\n";
+  else
+  {
+    quarters += quarter;
+    editExistingQuarter(quarters.getSize() - 1, catalog);
+  }
 } // addQuarter()
 
 
@@ -96,14 +62,13 @@ void Schedule::addQuarter(const Catalog &catalog)
 void Schedule::edit(const Catalog &catalog)
 {
   int choice;
-  char name[80];
+  string name;
   
-  if(studentName == NULL)
+  if(studentName == "")
   {
     cout << "Student name: ";
-    cin.getline(name, 80);
-    studentName = new char[strlen(name) + 1];
-    strcpy(studentName, name);
+    getline(cin, name);
+    studentName = name;
   } // if name is NULL
   
   editPreviousCourses();
@@ -117,8 +82,8 @@ void Schedule::edit(const Catalog &catalog)
   
   if(choice == 1)
   {
-    strcat(name, ".csv");
-    ofstream outf(name);
+    name += ".csv";
+    ofstream outf(name.c_str());
     outf << *this;
   }
 } // edit()
@@ -128,7 +93,8 @@ void Schedule::editExistingQuarter(int pos, const Catalog &catalog)
 {
   
   int choice;
-  char courseName[20], courseQuarters;
+  string courseName;
+  short courseQuarters;
   
   do
   {
@@ -146,7 +112,7 @@ void Schedule::editExistingQuarter(int pos, const Catalog &catalog)
     if(choice == 1 || choice == 2)
     {
       cout << "Course name: ";
-      cin.getline(courseName, 20);
+      getline(cin, courseName);
     }
 
     switch(choice)
@@ -164,15 +130,8 @@ void Schedule::editExistingQuarter(int pos, const Catalog &catalog)
         if(!findCourse(courseName))
           quarters[pos] += courseName;
         break;
-        
-      case 2: 
-        quarters[pos] -= courseName; 
-        break;
-        
-      default: 
-        cout << "Choice must be between 0 and 2.\n";
-        break;
-        
+      case 2: quarters[pos] -= courseName; break;
+      default: cout << "Choice must be between 0 and 2.\n";
     } // switch
   } while(choice != 0);
 } // editExistingQuarter()
@@ -185,10 +144,10 @@ void Schedule::editPreviousCourses()
   do
   {
     cout << "\nPrevious Courses:\n";
-    if(previousCourseCount == 0)
+    if(previousCourses.getSize() == 0)
       cout << "No previous courses.\n";
     else  // has some previous courses
-      for(int i = 0; i < previousCourseCount; i++)
+      for(int i = 0; i < previousCourses.getSize(); i++)
       {
         cout << left << setw(8) << previousCourses[i];
         if(i % 8 == 0 && i != 0)
@@ -205,21 +164,10 @@ void Schedule::editPreviousCourses()
     
     switch(choice)
     {
-      case 0: 
-        break;
-        
-      case 1: 
-        addPreviousCourse(); 
-        break;
-        
-      case 2: 
-        removePreviousCourse(); 
-        break;
-        
-      default: 
-        cout << "Choice must be between 0 and 2.\n";
-        break;
-        
+      case 0: break;
+      case 1: addPreviousCourse(); break;
+      case 2: removePreviousCourse(); break;
+      default: cout << "Choice must be between 0 and 2.\n";
     } // switch
   } while(choice != 0);
   
@@ -229,12 +177,12 @@ void Schedule::editPreviousCourses()
 
 void Schedule::editQuarter(const Catalog &catalog)
 {
-  char season[80];
+  string season;
   int year;
   cout << "Edit Quarter\n";
   getQuarterTime(season, &year);
   
-  for(int i = 0; i < quarterCount; i++)
+  for(int i = 0; i < quarters.getSize(); i++)
     if(quarters[i] == Quarter(season, year))
     {
        editExistingQuarter(i, catalog);
@@ -253,7 +201,7 @@ void Schedule::editQuarters(const Catalog &catalog)
   {
     cout << "Quarters\n";
   
-    for(int i = 0; i < quarterCount; i++)
+    for(int i = 0; i < quarters.getSize(); i++)
     quarters[i].show();
      
     cout << "\n\nQuarter Menu\n";
@@ -267,25 +215,11 @@ void Schedule::editQuarters(const Catalog &catalog)
     
     switch(choice)
     {
-      case 0: 
-        break;
-        
-      case 1: 
-        addQuarter(catalog); 
-        break;
-        
-      case 2: 
-        removeQuarter(); 
-        break;
-        
-      case 3: 
-        editQuarter(catalog); 
-        break;
-        
-      default: 
-        cout << "Choice must be between 0 and 3.\n";
-        break;
-        
+      case 0: break;
+      case 1: addQuarter(catalog); break;
+      case 2: removeQuarter(); break;
+      case 3: editQuarter(catalog); break;
+      default: cout << "Choice must be between 0 and 3.\n";
     } // switch
   } while(choice != 0);
 } // editQuarters()
@@ -293,29 +227,27 @@ void Schedule::editQuarters(const Catalog &catalog)
 
 
 
-bool Schedule::findCourse(const char *name) const
+bool Schedule::findCourse(const string & name) const
 {
-  
-  for(int i = 0; i < previousCourseCount; i++)
-    if(strcmp(previousCourses[i], name) == 0)
-    {
-      cout << name << " already is a previous course.\n";
-      return(true);
-    } // if course already in previousCourses
+  if(previousCourses.find(name) == name)
+  {
+    cout << name << " already is a previous course.\n";
+     return true;
+  } // if course already in previousCourses
 
-  for(int i = 0; i < quarterCount; i++)
+  for(int i = 0; i < quarters.getSize(); i++)
     if(quarters[i].findCourse(name))
     {
       cout << name << " is already in ";
       quarters[i].printTime();
-      return(true);
+      return true;
     }
   
-  return(false);
+  return false;
 } // findCourse()
 
 
-void Schedule::getQuarterTime(char *season, int *year) const
+void Schedule::getQuarterTime(string &season, int *year) const
 {
   int seasonNum;
   
@@ -326,21 +258,10 @@ void Schedule::getQuarterTime(char *season, int *year) const
     
     switch(seasonNum)
     {
-      case 1: 
-        strcpy(season, "Fall"); 
-        break;
-        
-      case 2: 
-        strcpy(season, "Winter"); 
-        break;
-        
-      case 3: 
-        strcpy(season, "Spring"); 
-        break;
-      default: 
-        cout << "Season must be between 1 and 3.\n";
-        break;
-        
+      case 1: season = "Fall"; break;
+      case 2: season = "Winter"; break;
+      case 3: season = "Spring"; break;
+      default: cout << "Season must be between 1 and 3.\n";
     } // switch
   } while(seasonNum < 1 || seasonNum > 3);
   
@@ -355,54 +276,55 @@ istream& operator>> (istream &is, Schedule &rhs)
   is.getline(line, 1000);
   
   ptr = strtok(line, ",");
-  rhs.studentName = new char[strlen(ptr) + 1];
-  strcpy(rhs.studentName, ptr);
-  rhs.previousCourseCount = atoi(strtok(NULL, ","));
-  rhs.previousCourses = new char*[rhs.previousCourseCount];
-  rhs.quarterCount = atoi(strtok(NULL, ","));
-  rhs.quarters = new Quarter[rhs.quarterCount];
+  rhs.studentName = ptr;
+  int previousCourseCount = atoi(strtok(NULL, ","));
+  int quarterCount = atoi(strtok(NULL, ","));
   is.getline(line, 1000);
   ptr = strtok(line, ",");
   
-  for(int i = 0; i < rhs.previousCourseCount; i++)
+  for(int i = 0; i < previousCourseCount; i++)
   {
-    rhs.previousCourses[i] = new char[strlen(ptr) + 1];
-    strcpy(rhs.previousCourses[i], ptr);
+    rhs.previousCourses += ptr;
     ptr = strtok(NULL, ",");
   } // while more previous courses;
   
-  for(int i = 0; i < rhs.quarterCount; i++)
-    is >> rhs.quarters[i];
+  Quarter quarter;
   
-  return(is);
+  for(int i = 0; i < quarterCount; i++)
+  {
+    is >> quarter;
+    rhs.quarters += quarter;
+  }  // for each quarter
+  
+  return is;
 } // operator>>
 
 
 ostream& operator<< (ostream &os, const Schedule &rhs)
 {
   os << rhs.studentName << ',' 
-    << rhs.previousCourseCount << ',' << rhs.quarterCount << endl;
+    << rhs.previousCourses.getSize() << ',' << rhs.quarters.getSize() << endl;
   
-  for(int i = 0; i < rhs.previousCourseCount; i++)
+  for(int i = 0; i < rhs.previousCourses.getSize(); i++)
     os << rhs.previousCourses[i] << ',';
   
   os << endl;
 
   
-  for(int i = 0; i < rhs.quarterCount; i++)
+  for(int i = 0; i < rhs.quarters.getSize(); i++)
     os << rhs.quarters[i];
   
-  return(os);
+  return os;
 } // operator<<
 
 
 void Schedule::read()
 {
-  char name[80];
+  string name;
   cout << "Student name: ";
-  cin.getline(name, 80);
-  strcat(name, ".csv");
-  ifstream inf(name);
+  getline(cin, name);
+  name += ".csv";
+  ifstream inf(name.c_str());
   if(!inf)
   {
     cout << name << " not found.\n";
@@ -412,10 +334,10 @@ void Schedule::read()
   inf >> *this;
   
   cout << "\nPrevious Courses:\n";
-  if(previousCourseCount == 0)
+  if(previousCourses.getSize() == 0)
     cout << "No previous courses.\n";
   else  // has some previous courses
-    for(int i = 0; i < previousCourseCount; i++)
+    for(int i = 0; i < previousCourses.getSize(); i++)
     {
       cout << left << setw(8) << previousCourses[i];
     
@@ -424,50 +346,35 @@ void Schedule::read()
     }  // for each previous course
   
   cout << "\nQuarters:\n";
-  for(int i = 0; i < quarterCount; i++)
+  for(int i = 0; i < quarters.getSize(); i++)
     quarters[i].show();
 }  // read()
 
 
 void Schedule::removePreviousCourse()
 {
-  char line[1000];
+  string line;
   cout << "Course name to remove: ";
-  cin.getline(line, 1000);
+  getline(cin, line);
   
-  for(int i = 0; i < previousCourseCount; i++)
-    if(strcmp(previousCourses[i], line) == 0)
-    {
-      for(int j = i; j < previousCourseCount - 1; j++)
-        previousCourses[j] = previousCourses[j + 1];
-      
-      previousCourseCount--;
-      return;
-    } // if course already in previousCourses
-  
-  cout << line << " is not a previous course.\n";
+  if(previousCourses.find(line) == line)
+    previousCourses -= line;
+  else  // course not found  
+    cout << line << " is not a previous course.\n";
 } // removePreviousCourse()
 
 
 void Schedule::removeQuarter()
 {
-  char season[80];
+  string season;
   int year;
   cout << "Remove Quarter\n";
   getQuarterTime(season, &year);
+  Quarter quarter(season, year);
   
-  for(int i = 0; i < quarterCount; i++)
-    if(quarters[i] == Quarter(season, year))
-    {
-      for(int j = i; j < quarterCount - 1; j++)
-        quarters[j] = quarters[j + 1];
-       
-      quarterCount--;
-      return;
-    } // if found a match
-  
-  cout << season << ' ' << year << " does not exist.\n";
+  if(quarters.find(quarter) == quarter)
+    quarters -= quarter;
+  else // quarter not found
+    cout << season << ' ' << year << " does not exist.\n";
 } // removeQuarter()
-
-
 

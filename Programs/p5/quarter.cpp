@@ -1,67 +1,54 @@
-// Eric Lowe
-// quarter.cpp
-// Usage Statement:
-//
-// Explanations
+//  Author: davis
 
 #include <cstring>
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include "list.h"
 #include "quarter.h"
 
 using namespace std;
 
 
-Quarter::Quarter(): season(NULL), year(NULL), courseCount(0), courses(NULL)
+Quarter::Quarter():courses(string())
 {
 }  // Quarter()
 
 
-Quarter::Quarter(const char *seas, int y) : year(y), courseCount(0), courses(NULL)
+Quarter::Quarter(const string &seas, int y) : season(seas), year(y), 
+  courses(string())
 {
-  season = new char[strlen(seas) + 1];
-  strcpy(season, seas);
 } // Quarter()
 
 
+Quarter::Quarter(const Quarter &rhs) : season(rhs.season), year(rhs.year), 
+  courses(rhs.courses)
+{
+  
+} // Quarter()
+
 Quarter::~Quarter()
 {
-  if(season)
-    delete [] season;
-  
-  if(courses)
-  {
-    for(int i = 0; i < courseCount; i++)
-      delete [] courses[i];
-    
-    delete [] courses;
-  } // if courses;
-  
 } // ~Quarter()
 
-bool Quarter::checkQuarter(char quarters) const
+bool Quarter::checkQuarter(short quarters) const
 {
-  if(strcmp(season, "Fall") == 0 && (quarters & 1) == 0)
-    return(false);
+  if((season == "Fall") && (quarters & 1) == 0)
+    return false;
   
-   if(strcmp(season, "Winter") == 0 && (quarters & 2) == 0)
-    return(false);
+   if((season == "Winter") && (quarters & 2) == 0)
+    return false;
   
-   if(strcmp(season, "Spring") == 0 && (quarters & 4) == 0)
-    return(false);
+   if((season == "Spring") && (quarters & 4) == 0)
+    return false;
   
-  return(true);
+  return true;
 } // checkQuarter()
 
 
- bool Quarter::findCourse(const char* name) const
+ bool Quarter::findCourse(const string &name) const
  {
-   for(int i = 0; i < courseCount; i++)
-     if(strcmp(name, courses[i]) == 0)
-       return(true);
-   
-   return(false);
+   return courses.find(name) == name;
  } // findCourse
  
  
@@ -69,121 +56,74 @@ bool Quarter::checkQuarter(char quarters) const
 Quarter& Quarter::operator= (const Quarter &rhs)
 {
   if(this == &rhs)
-    return(*this);
+    return *this;
   
   year = rhs.year;
-  
-  if(season)
-    delete [] season;
-  
-  if(courses)
-  {
-    for(int i = 0; i < courseCount; i++)
-      delete [] courses[i];
-    
-    delete [] courses;
-  } // if courses;
-  
-  if(rhs.season)
-  {
-    season = new char[strlen(rhs.season) + 1];
-    strcpy(season, rhs.season);
-  } // if rhs.season
-  else
-    season = NULL;
-  
-  courseCount = rhs.courseCount;
-  
-  if(rhs.courses)
-  {
-    courses = new char* [courseCount];
-    
-    for(int i = 0; i < courseCount; i++)
-    {
-      courses[i] = new char[strlen(rhs.courses[i]) + 1];
-      strcpy(courses[i], rhs.courses[i]);
-    }  // for each course
-  }  // if rhs.courses
-
-  return(*this);
+  season = rhs.season;
+  courses = rhs.courses;;
+  return *this;
 } // operator=
 
 
 bool Quarter::operator== (const Quarter &rhs) const
 {
-  if(season == NULL)
-    return(rhs.season == NULL && year == rhs.year);
-  
-  return(rhs.season != NULL && strcmp(season, rhs.season) == 0 
-    && year == rhs.year);
-}
+  return rhs.season == season && year == rhs.year;
+}  // operator==
 
 
-Quarter& Quarter::operator+= (const char *courseName)
+Quarter& Quarter::operator+= (const string &courseName)
 {
-  char **temp = new char*[courseCount + 1];
-  
-  for(int i = 0; i < courseCount; i++)
-    temp[i] = courses[i];
-  
-  delete [] courses;
-  courses = temp;
-  courses[courseCount] = new char[strlen(courseName) + 1];
-  strcpy(courses[courseCount++], courseName);
-  return(*this);
+  courses += courseName;
+  return *this;
 } // operator+=
 
 
-Quarter& Quarter::operator-= (const char *courseName)
+Quarter& Quarter::operator-= (const string &courseName)
 {
-  for(int i = 0; i < courseCount; i++)
-  {
-    if(strcmp(courses[i], courseName) == 0)
-    {
-      delete [] courses[i];
-      
-      for(int j = i; j < courseCount - 1; j++)
-        courses[j] = courses[j + 1];
-      
-      courseCount--;
-      return(*this);
-    }
-  } // for each course name
+  if(courses.find(courseName) != courseName)
+     cout << courseName << " does not exist in " << season << ' ' << year << ".\n";
+  else
+    courses -= courseName;
   
-  cout << courseName << " does not exist in " << season << ' ' << year << ".\n";
-  return(*this);
+  return *this;
 } // operator-=
 
+
+bool Quarter::operator< (const Quarter &rhs) const
+{
+  if(year != rhs.year)
+    return year < rhs.year;
+  
+  return season == "Winter" || rhs.season == "Fall";
+} // operator<
 
 istream& operator>> (istream &is, Quarter &rhs)
 {
   char line[1000], *ptr;
   is.getline(line, 1000);
   ptr = strtok(line, ",");
-  rhs.season = new char[strlen(ptr) + 1];
-  strcpy(rhs.season, ptr);
+  rhs.season = ptr;
   rhs.year = atoi(strtok(NULL, ","));
-  rhs.courseCount = atoi(strtok(NULL, ","));
-  rhs.courses = new char*[rhs.courseCount];
+  int courseCount = atoi(strtok(NULL, ","));
   
-  for(int i = 0; i < rhs.courseCount; i++)
+  for(int i = 0; i < courseCount; i++)
   {
     ptr = strtok(NULL, ",");
-    rhs.courses[i] = new char[strlen(ptr) + 1];
-    strcpy(rhs.courses[i], ptr);
-  } // for each course
-  return(is);
+    rhs.courses += string(ptr);
+  }  // for each course in the quarter
+
+  return is;
 } // operator>>
 
 ostream& operator<< (ostream &os, const Quarter &rhs)
 {
-  os << rhs.season << ',' << rhs.year << ',' << rhs.courseCount << ',';
+  os << rhs.season << ',' << rhs.year << ',' << rhs.courses.getSize() << ',';
   
-  for(int i = 0; i < rhs.courseCount; i++)
+  for(int i = 0; i < rhs.courses.getSize(); i++)
     os << rhs.courses[i] << ',';
   
   os << endl;
-  return(os);
+  return os;
 } // operator>>
 
 
@@ -199,11 +139,11 @@ void Quarter::show() const
    
   cout << year << ' ' << left << setw(6) << season <<  ": ";
   
-  if (courseCount == 0)
+  if (courses.getSize() == 0)
     cout << "No courses.";
   else  // at least one course
   {
-    for(i = 0; i < courseCount - 1; i++)
+    for(i = 0; i < courses.getSize() - 1; i++)
       cout << left << setw(8) << courses[i] << ", ";
    
     cout << left << setw(8) << courses[i];
@@ -211,6 +151,3 @@ void Quarter::show() const
   
   cout << endl;
 } // show()
-
-
-

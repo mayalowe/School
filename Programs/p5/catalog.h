@@ -1,35 +1,30 @@
-// Eric Lowe
-// catalog.h
-// Usage Statement:
-//
-// Explanations
+// Author: Sean Davis
 
-#ifndef CATALOG_H_
-#define CATALOG_H_
+#ifndef catalog_H
+#define	catalog_H
 
-#include <fstream>
 #include <string>
+#include <fstream>
+#include "list.h"
 #include "course.h"
+
 using namespace std;
 
 class Catalog
 {
-  Course *courses;
-  int count;
-  int size;
-  void printPrerequisites(int pos, string prereqList);
-  void resize();
+  List <Course> courses;
+  void printPrerequisites(const string &courseName, string & prereqList);
 public:
   Catalog();
   ~Catalog();
   
   void find();
-  char getQuarters(const char *courseName) const;
+  short getQuarters(const string &courseName) const;
   friend ifstream& operator>> (ifstream &inf, Catalog &rhs);
   void printAll();
 
 
 };  // class Catalog
 
+#endif	/* catalog_H */
 
-#endif /* CATALOG_H_ */
