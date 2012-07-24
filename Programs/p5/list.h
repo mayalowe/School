@@ -26,8 +26,8 @@ public:
   List<T>(const T nf);
   ~List<T>();
   List<T>& operator=(const T &rhs);
-  List<T>& operator+=();
-  List<T>& operator-=();
+  List<T>& operator+=(const T d);
+  List<T>& operator-=(const T d);
   List<T>& operator[](int index);
   const List<T>& operator[](int index) const;
   void getSize();

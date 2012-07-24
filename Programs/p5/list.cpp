@@ -24,14 +24,14 @@ List<T>& List<T>::operator=(const T &rhs)
 }
   
 template <class T> 
-List<T>& List<T>::operator+=()
+List<T>& List<T>::operator+=(const T d)
 {
   
   return(*this);
 }
   
 template <class T> 
-List<T>& List<T>::operator-=()
+List<T>& List<T>::operator-=(const T d)
 {
   
   return(*this);
@@ -40,14 +40,16 @@ List<T>& List<T>::operator-=()
 template <class T> 
 List<T>& List<T>::operator[](int index)
 {
-  
+  if(index > size)
+    cout << "Node does not exist!\n" << endl;
   return(*this);
 }
   
 template <class T> 
 const List<T>& List<T>::operator[](int index) const
 {
-  
+  if(index > size)
+    cout << "Node does not exist!\n" << endl;
   return(*this);
 }
   
