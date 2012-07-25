@@ -5,6 +5,9 @@
 #ifndef LIST_H_
 #define LIST_H_
 
+#include <iostream>
+#include <string>
+
 template <class T> class List;
 
 template <class T> 
@@ -23,16 +26,16 @@ class List {
   const T notFound;
     
 public:
-  List<T>(const T nf);
-  ~List<T>();
-  List<T>& operator=(const T &rhs);
-  List<T>& operator+=(const T d);
-  List<T>& operator-=(const T d);
-  List<T>& operator[](int index);
-  const List<T>& operator[](int index) const;
+  List(const T nf);
+  ~List();
+  List& operator=(const T &rhs);
+  List& operator+=(const T d);
+  List& operator-=(const T d);
+  List& operator[](int index);
+  const List& operator[](int index) const;
   void getSize();
   void insert(const T &n);
-  string& find(const T k);
+  T& find(const T k);
   void remove(const T k);
 };
 
@@ -40,3 +43,4 @@ public:
 #endif /* LIST_H_ */
 
 #include "list.cpp"
+

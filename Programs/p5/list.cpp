@@ -63,26 +63,26 @@ void List<T>::getSize()
 template <class T> 
 void List<T>::insert(const T &n)
 {
-  ListNode *ptr, *prev = NULL;
-  for(ptr = head; ptr && ptr->data < d; ptr = ptr->next)
+  ListNode<T> *ptr, *prev = NULL;
+  for(ptr = head; ptr && ptr->data < n; ptr = ptr->next)
     prev = ptr;
   
   if(prev)
-    prev->next = new ListNode(d, ptr);
+    prev->next = new ListNode<T>(n, ptr);
   else
-    head = new ListNode(d, ptr);
+    head = new ListNode<T>(n, ptr);
   
   return;
 }
   
 template <class T> 
-string& List<T>::find(const T k)
+T& List<T>::find(const T k)
 {
-  ListNode *ptr;
+  ListNode<T> *ptr;
   
   for(ptr = head; ptr && ptr->data < k; ptr = ptr->next);
   
-  if(!ptr || key < ptr->data)
+  if(!ptr || k < ptr->data)
     return(notFound);
   else
     return(ptr->data);
@@ -91,7 +91,7 @@ string& List<T>::find(const T k)
 template <class T> 
 void List<T>::remove(const T k)
 {
-  ListNode *ptr, *prev = NULL;
+  ListNode<T> *ptr, *prev = NULL;
   
   for(ptr = head; ptr && ptr->data != k; ptr = ptr->next)
     prev = ptr;

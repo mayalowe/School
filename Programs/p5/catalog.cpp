@@ -91,3 +91,4 @@ void Catalog::printAll()
   for(int i = 0; i < courses.getSize(); i++)
     courses[i].print();
 } // printAll()
+

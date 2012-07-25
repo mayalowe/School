@@ -27,4 +27,3 @@ public:
 };  // class Catalog
 
 #endif	/* catalog_H */
-
