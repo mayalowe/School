@@ -171,8 +171,17 @@ class Word {
       // while not EOF
       while(getline(inf, line)) 
       {
-        permuteTiles(line);
-        printResults(line);
+        if(mindTheGap(line))
+        {
+          permuteTiles(line);
+          printResults(line);
+        }//if(mindTheGap(line))
+        else
+        {
+          darkStar(line);
+          printResults(line);
+        }//else
+        
         // clear out variables for next line
         highScore = 0; 
         wordScore = 0;
@@ -243,6 +252,64 @@ class Word {
     } // void findMatch(const string &s)
     
     
+    // Method to check a users tiles to see if a space tile exists.  If one
+    // exists, mindTheGap calls appropriate methods to deal with spaces. 
+    bool mindTheGap(const string &s)
+    {
+      size_t gap = s.find(" ");
+      if(gap != string::npos)
+        return(false);
+      else
+        return(true); 
+    }// bool mindTheGap(const string &s)
+    
+    // Method to deal with space tiles, which are essentially wildcards. 
+    // Called by method mindTheGap.
+    void darkStar(const string &s)
+    {
+      size_t pos = s.find(" ");
+      string wildcard;
+      for(Scores::const_iterator itr = myScores.begin(); itr != myScores.end(); itr++)
+      {
+        wildcard = s.substr(0, pos);
+        wildcard += itr->first;
+        wildcard += s.substr(pos + 1, s.length());
+        if(wildcard.length() <= 8 && wildcard.find_first_not_of("abcdefghijklm"
+            "nopqrstuvwxyz"))
+        {
+          //cout << wildcard << endl;
+          gapToothed(s, wildcard);
+        }
+      } // for(Scores::const_iterator itr = myScores.begin(); itr != myScores.end(); itr++)
+      return;
+    }// void darkStar(const string &s)
+    
+    void gapToothed(const string &s, const string &t)
+    {
+      int i = s.length();
+      string permute, temp;
+      permute = t;
+            
+      for(int n = 0; n <= i; n++)
+      {
+        rotate(permute.begin(), permute.begin()+n, permute.end());
+        do 
+        {
+          temp = permute.substr(0, i);
+          if(myScored.find(temp) == myScored.end())
+          {
+            findMatch(s, permute, temp);
+          } // if(words.find(temp) == words.end())
+          else
+          {
+            fillMatching(s, temp);
+            findMatch(s, permute, temp);
+          } // else
+        } while(next_permutation(permute.begin(), permute.end()));
+      } // for(int n = 0; n <= i; n++)
+            
+      return;
+    } // void gapToothed(const string &s, const string &t)
 };
 
 // to take command line arguments, argc for number of args and argv[] to hold args
